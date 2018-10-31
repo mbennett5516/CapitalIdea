@@ -1,7 +1,18 @@
 module.exports = function(sequelize, DataTypes){
     const Categories = sequelize.define('Categories', {
-        category: {
-            type: DataTypes.STRING
+        category_name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        is_required: {
+            type:DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        category_budget: {
+            type: DataTypes.DOUBLE(10,2)
+        },
+        category_total: {
+            type: DataTypes.DOUBLE(10,2)
         }
     });
 
