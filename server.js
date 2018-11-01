@@ -8,11 +8,11 @@ require('./routes/html-routes')(app);
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, 'public')));    
 
 const PORT = process.env.PORT || 8080;   
 
-db.sequelize.sync({force: true}).then(function() {
+db.sequelize.sync().then(function() {
     app.listen(PORT, function(){
         console.log('App listening on port: ' + PORT);
     });
