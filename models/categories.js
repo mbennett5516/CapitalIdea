@@ -9,10 +9,12 @@ module.exports = function(sequelize, DataTypes){
             defaultValue: false
         },
         category_budget: {
-            type: DataTypes.DOUBLE(10,2)
+            type: DataTypes.DOUBLE(10,2),
+            defaultValue: 20.00
         },
         category_total: {
-            type: DataTypes.DOUBLE(10,2)
+            type: DataTypes.DOUBLE(10,2),
+            defaultValue: 0.00
         }
     });
 
