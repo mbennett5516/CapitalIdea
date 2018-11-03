@@ -10,9 +10,6 @@ module.exports = function(sequelize, DataTypes){
         },
         category: {
             type: DataTypes.STRING
-        },
-        account_balance: {
-            type: DataTypes.DOUBLE(10,2),
         }
     });
 

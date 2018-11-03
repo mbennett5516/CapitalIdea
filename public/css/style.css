@@ -1,10 +1,10 @@
 .navbar{
-    max-height: 10vh;
+    height: 10vh;
     background-color: #19722e;
 }
 .navbar-brand{
     height: 100%;
 }
-.navbar-brand > img{
+.navbar-brand > a > img{
     height: 100%;
 }
