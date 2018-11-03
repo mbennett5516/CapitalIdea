@@ -8,3 +8,15 @@
 .navbar-brand > a > img{
     height: 100%;
 }
+
+.navbar-button-container{
+    float: right;
+}
+
+li a{
+    color: lightgray;
+}
+
+li a:hover{
+    color: white;
+}

@@ -2,6 +2,10 @@ const db = require('../models');
 
 const items = [
     {
+        transaction_type: 'Deposit',
+        amount: 5000.00
+    },
+    {
         transaction_type: 'Debt',
         amount: 20.00,
         category: 'Video Entertainment',
@@ -52,14 +56,13 @@ const categories = [
     }
 ];
 
-db.sequelize.sync().then(function () {
-    db.Transactions.bulkCreate(items).then(function (rows) {
+db.sequelize.sync({force: true}).then(function () {
+    db.Categories.bulkCreate(categories).then(function (rows) {
         console.log('\n\nINSERTED\n\n');
     }).catch(function (err) {
         console.log('\n\nError:', err);
     });
-
-    db.Categories.bulkCreate(categories).then(function (rows) {
+    db.Transactions.bulkCreate(items).then(function (rows) {
         console.log('\n\nINSERTED\n\n');
     }).catch(function (err) {
         console.log('\n\nError:', err);

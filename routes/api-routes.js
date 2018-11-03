@@ -2,6 +2,15 @@ const db = require('../models');
 
 module.exports = function(app){
 
+    app.get('/api/account', function(req, res){
+        db.Transactions.findAll({})
+        .then(function(row){
+        res.json(row);
+    }).catch(function(err){
+        res.json(err);
+    });
+});
+
     app.get('/api/last_transaction', function(req, res){
         db.Transactions.findAll({
             limit: 1,
