@@ -2,7 +2,9 @@
     max-height: 10vh;
     background-color: #19722e;
 }
-
 .navbar-brand{
-    max-height: 10vh;
+    height: 100%;
+}
+.navbar-brand > img{
+    height: 100%;
 }

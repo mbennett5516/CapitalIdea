@@ -8,7 +8,44 @@ const items = [
 
 const categories = [
     {
-        //categories data here
+        category_name: 'Gas & Fuel',
+        category_budget: 200.00,
+        category_total: 0.00
+    },
+    {
+        category_name: 'Video Entertainment',
+        category_budget: 70.00,
+        category_total: 0.00
+    },
+    {
+        category_name: 'Alcohol & Bars',
+        category_budget: 10.00,
+        category_total: 0.00
+    },
+    {
+        category_name: 'Coffee Shops',
+        category_budget: 10.00,
+        category_total: 0.00
+    },
+    {
+        category_name: 'Gas & Fuel',
+        category_budget: 200.00,
+        category_total: 0.00
+    },
+    {
+        category_name: 'Gas & Fuel',
+        category_budget: 200.00,
+        category_total: 0.00
+    },
+    {
+        category_name: 'Gas & Fuel',
+        category_budget: 200.00,
+        category_total: 0.00
+    },
+    {
+        category_name: 'Gas & Fuel',
+        category_budget: 200.00,
+        category_total: 0.00
     }
 ];
 

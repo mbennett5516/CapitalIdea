@@ -4,10 +4,6 @@ module.exports = function(sequelize, DataTypes){
             type: DataTypes.STRING,
             allowNull: false
         },
-        is_required: {
-            type:DataTypes.BOOLEAN,
-            defaultValue: false
-        },
         category_budget: {
             type: DataTypes.DOUBLE(10,2),
             defaultValue: 20.00
