@@ -11,11 +11,11 @@ module.exports = function (app) {
             });
     });
 
-    app.get('/api/budgets', function(req, res){
+    app.get('/api/budgets', function (req, res) {
         db.Categories.findAll({})
-            .then(function(rows){
+            .then(function (rows) {
                 res.json(rows);
-            }).catch(function(err){
+            }).catch(function (err) {
                 res.json(err);
             });
     });

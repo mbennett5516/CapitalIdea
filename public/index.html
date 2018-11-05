@@ -19,6 +19,7 @@
         crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 
 <body>
@@ -34,7 +35,7 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row">
+        <div class="row justify-content-between">
             <div class="col-4">
                 <div class="card" id="account">
 
@@ -44,7 +45,7 @@
                 </div>
             </div>
             <div class="col-6" id="pie">
-
+                    <canvas id="myChart"></canvas>
             </div>
         </div>
     </div>
