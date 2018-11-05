@@ -23,6 +23,14 @@ body{
     float: right;
 }
 
+.hide{
+    display: none;
+}
+
+.red{
+    color: red;
+}
+
 li a{
     color: lightgray;
 }

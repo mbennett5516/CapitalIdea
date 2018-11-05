@@ -34,7 +34,7 @@
         </ul>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="homePage">
         <div class="row justify-content-between">
             <div class="col-4">
                 <div class="card" id="account">
@@ -45,9 +45,25 @@
                 </div>
             </div>
             <div class="col-6" id="pie">
-                    <canvas id="myChart"></canvas>
+                <canvas id="myChart"></canvas>
             </div>
         </div>
+    </div>
+
+    <div class="container-fluid" id="transactionsPage">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Type</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Date/Time</th>
+                </tr>
+            </thead>
+            <tbody id="transactionsData">
+                
+            </tbody>
+        </table>
     </div>
 
     <script src="js/app.js"></script>
