@@ -1,3 +1,8 @@
+const getHome = function(){
+    getAccountBalance();
+    getBudgetData();
+};
+
 const getAccountBalance = function(){
     $.ajax({
         url: '/api/account',
@@ -18,5 +23,21 @@ const getAccountBalance = function(){
     })
 }
 
-$('#home').on('click', getAccountBalance);
-$('.navbar-brand').on('click', getAccountBalance);
+const getBudgetData = function(){
+    $.ajax({
+        url: '/api/budgets',
+        method: "GET"
+    }).then(function(response){
+        for (let i = 0; i < response.length; i++){
+            let data = '';
+            let width = ((response[i].category_total/response[i].category_budget)*100);
+            console.log(width);
+            data += `<div class = card><div class = card-body><h4>${response[i].category_name}</h4>
+            <div class="progress"><div class="progress-bar bg-success" role="progressbar" aria-valuemax="${response[i].category_budget}" aria-valuemin="0" aria-valuenow="${response[i].category_total}" style="width: ${width}%"</div></div></div></div>`;
+            $('#budgets').append(data);
+        }
+    })
+}
+
+$('#home').on('click', getHome);
+$('.navbar-brand').on('click', getHome);
