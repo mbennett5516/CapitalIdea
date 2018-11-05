@@ -31,6 +31,19 @@ body{
     color: red;
 }
 
+.dropdown-menu{
+    background-color: #19722e;
+}
+
+.dropdown-item{
+    color: lightgray;
+}
+
+.dropdown-item:hover{
+    background-color: #19722e;
+    color: white;
+}
+
 li a{
     color: lightgray;
 }

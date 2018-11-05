@@ -13,6 +13,8 @@ const getHome = function () {
 const hideAll = function () {
     $('#homePage').addClass('hide');
     $('#transactionsPage').addClass('hide');
+    $('#depositForm').addClass('hide');
+    $('#debtForm').addClass('hide');
 }
 
 const getAccountBalance = function () {
@@ -108,7 +110,6 @@ const getTransactions = function () {
         method: "GET"
     }).then(function (response) {
         $('#transactionsData').empty();
-
         for (let i = response.length - 1; i >= 0; i--) {
             let data = '';
             if (response[i].transaction_type === 'Debt') {
@@ -131,10 +132,21 @@ const getTransactions = function () {
             }
             $('#transactionsData').append(data);
         }
-
     })
+}
+
+const newDeposit = function(){
+    hideAll();
+    $('#depositForm').removeClass('hide');
+}
+
+const newDebt = function(){
+    hideAll();
+    $('#debtForm').removeClass('hide');
 }
 
 $('#home').on('click', getHome);
 $('.navbar-brand').on('click', getHome);
 $('#transactions').on('click', getTransactions);
+$('#new_deposit').on('click', newDeposit);
+$('#new_debt').on('click', newDebt);
