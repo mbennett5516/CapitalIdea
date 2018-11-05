@@ -1,11 +1,12 @@
 const db = require('../models');
+const toDate = require('normalize-date');
 
 module.exports = function (app) {
 
     app.get('/api/account', function (req, res) {
         db.Transactions.findAll({})
-            .then(function (row) {
-                res.json(row);
+            .then(function (rows) {
+                res.json(rows);
             }).catch(function (err) {
                 res.json(err);
             });

@@ -108,7 +108,6 @@ const getTransactions = function () {
         method: "GET"
     }).then(function (response) {
         $('#transactionsData').empty();
-        console.log(response)
 
         for (let i = response.length - 1; i >= 0; i--) {
             let data = '';
@@ -116,7 +115,7 @@ const getTransactions = function () {
                 data += `
             <tr id = "row${response[i].id}">
                 <td class="red">${response[i].transaction_type}</td>
-                <td class="red">${response[i].amount}</td>
+                <td class="red">$${response[i].amount.toFixed(2)}</td>
                 <td class="red">${response[i].category}</td>
                 <td class="red">${response[i].createdAt}</td>
             </tr>`;
@@ -125,8 +124,8 @@ const getTransactions = function () {
                 data += `
             <tr id = "row${response[i].id}">
                 <td>${response[i].transaction_type}</td>
-                <td>${response[i].amount}</td>
-                <td>${response[i].category}</td>
+                <td>$${response[i].amount.toFixed(2)}</td>
+                <td></td>
                 <td>${response[i].createdAt}</td>
             </tr>`;
             }
