@@ -136,9 +136,23 @@ const getTransactions = function () {
 }
 
 const newDeposit = function(){
-    hideAll();
-    $('#depositForm').removeClass('hide');
-}
+    let body = {
+        transaction_type: 'Deposit',
+        amount: parseFloat($('#depositAmount').val()).toFixed(2)
+    }
+    $.ajax({
+        url: '/api/deposit',
+        method: "POST",
+        data: body
+    }).then(function(response){
+        if (response.success === true)
+        getHome();
+        else{
+        alert("something went wrong");
+        console.log(response);
+        }
+    });
+};
 
 const newDebt = function(){
     hideAll();
@@ -148,5 +162,5 @@ const newDebt = function(){
 $('#home').on('click', getHome);
 $('.navbar-brand').on('click', getHome);
 $('#transactions').on('click', getTransactions);
-$('#new_deposit').on('click', newDeposit);
+$('#submitDeposit').on('click', newDeposit);
 $('#new_debt').on('click', newDebt);
