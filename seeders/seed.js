@@ -22,7 +22,7 @@ const categories = [
     {
         category_name: 'Video Entertainment',
         category_budget: 70.00,
-        category_total: 0.00
+        category_total: 20.00
     },
     {
         category_name: 'Alcohol & Bars',
