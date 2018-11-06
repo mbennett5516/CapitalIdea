@@ -13,8 +13,6 @@ const getHome = function () {
 const hideAll = function () {
     $('#homePage').addClass('hide');
     $('#transactionsPage').addClass('hide');
-    $('#depositForm').addClass('hide');
-    $('#debtForm').addClass('hide');
 }
 
 const getAccountBalance = function () {
@@ -24,7 +22,12 @@ const getAccountBalance = function () {
     }).then(function (response) {
         let sum = 0;
         for (let i = 0; i < response.length; i++) {
+            if(response[i].transaction_type === 'Debt'){
+            sum -= response[i].amount;
+            }
+            else{
             sum += response[i].amount;
+            }
         }
         if (sum > 0) {
             $('#account').css('background-color', '#19722e');
@@ -135,11 +138,13 @@ const getTransactions = function () {
     })
 }
 
-const newDeposit = function(){
+const newDeposit = function(event){
+    event.preventDefault();
     let body = {
         transaction_type: 'Deposit',
-        amount: parseFloat($('#depositAmount').val()).toFixed(2)
-    }
+        amount: $('#depositAmount').val()
+    };
+    // console.log(body);
     $.ajax({
         url: '/api/deposit',
         method: "POST",
@@ -154,13 +159,65 @@ const newDeposit = function(){
     });
 };
 
-const newDebt = function(){
-    hideAll();
-    $('#debtForm').removeClass('hide');
+const newDebt = function(event){
+    event.preventDefault();
+    let cat_name = '';
+    let body = {};
+    $.ajax({
+        url: `/api/category/${$('#categorySelect').val()}`,
+        method: "GET"
+    }).then(function(response){
+        cat_name = response[0].category_name;
+        body = {
+            transaction_type: 'Debt',
+            amount: $('#debtAmount').val(),
+            category: cat_name,
+            CategoryId: $('#categorySelect').val()
+        }
+        let old_total = response[0].category_total;
+        submitDebtTransaction(body, old_total);
+    });
+}
+
+const submitDebtTransaction = function(body, old_total){
+    $.ajax({
+        url: '/api/new_debt',
+        method: "POST",
+        data: body
+    }).then(function(response){
+        submitDebtCategories(body, old_total);
+    })
+}
+
+const submitDebtCategories = function(body, old_total){
+    $.ajax({
+        url: 'api/debt',
+        method: "POST",
+        data: body
+    }).then(function(response){
+        getHome();
+    })
+}
+
+const populateCategories = function(){
+    console.log("called");
+    $.ajax({
+        url: '/api/budgets',
+        method: "GET"
+    }).then(function(response){
+        $('#categorySelect').empty();
+        $('#categorySelect').html(`<option selected>Choose...</option>`);
+        let options = '';
+        for (let i = 0; i < response.length; i++){
+            options += `<option value="${response[i].id}">${response[i].category_name}</option>`;
+        }
+        $('#categorySelect').append(options);
+    })
 }
 
 $('#home').on('click', getHome);
 $('.navbar-brand').on('click', getHome);
 $('#transactions').on('click', getTransactions);
 $('#submitDeposit').on('click', newDeposit);
-$('#new_debt').on('click', newDebt);
+$('#submitDebt').on('click', newDebt);
+$('#new_debt').on('click', populateCategories);

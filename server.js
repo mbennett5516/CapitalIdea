@@ -9,12 +9,12 @@ Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
     return this._applyTimezone(date, options).format('YYYY-MM-DD HH:mm:ss.SSS');
   };
 
-require('./routes/api-routes')(app);
-require('./routes/html-routes')(app);
-
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));    
+app.use(express.static(path.join(__dirname, 'public')));
+
+require('./routes/api-routes')(app);
+require('./routes/html-routes')(app);
 
 const PORT = process.env.PORT || 8080;   
 
