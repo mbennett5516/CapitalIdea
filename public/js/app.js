@@ -50,7 +50,7 @@ const getBudgetData = function () {
         for (let i = 0; i < response.length; i++) {
             let data = '';
             let width = ((response[i].category_total / response[i].category_budget) * 100);
-            data += `<div class = card><div class = card-body><h4>${response[i].category_name}</h4>`;
+            data += `<div class = card><div class = card-body><h4>${response[i].category_name}</h4><h6><em>$${(response[i].category_budget - response[i].category_total).toFixed(2)} remaining</h6>`;
             if (response[i].category_total < (response[i].category_budget / 2)) {
                 data += `<div class="progress"><div class="progress-bar bg-success" role="progressbar" aria-valuemax="${response[i].category_budget}" aria-valuemin="0" aria-valuenow="${response[i].category_total}" style="width: ${width}%"</div></div></div></div>`;
             }
@@ -122,7 +122,6 @@ const getTransactions = function () {
                 <td class="red">${response[i].transaction_type}</td>
                 <td class="red">$${response[i].amount.toFixed(2)}</td>
                 <td class="red">${response[i].category}</td>
-                <td class="red">${response[i].createdAt}</td>
                 <td><a href="#" class="editDebtBtn" value="${response[i].id}" id="edit${response[i].id} "data-toggle="modal" data-target="#editModal"><i class="far fa-edit fa-2x"></i></a> <a href="#" class="deleteBtn" value="${response[i].id}" id="delete${response[i].id}"><i class="fas fa-trash-alt fa-2x red"></i></a></td>
             </tr>`;
             }
@@ -132,7 +131,6 @@ const getTransactions = function () {
                 <td>${response[i].transaction_type}</td>
                 <td>$${response[i].amount.toFixed(2)}</td>
                 <td></td>
-                <td>${response[i].createdAt}</td>
                 <td><a href="#" class="editBtn" value="${response[i].id}"id="edit${response[i].id}" data-toggle="modal" data-target="#editdepositModal"><i class="far fa-edit fa-2x"></i></a> <a href="#" class="deleteBtn" value="${response[i].id}" id="delete${response[i].id}"><i class="fas fa-trash-alt fa-2x red"></i></a></td>
             </tr>`;
             }

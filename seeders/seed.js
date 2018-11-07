@@ -7,52 +7,121 @@ const items = [
     },
     {
         transaction_type: 'Debt',
-        amount: 20.00,
-        category: 'Video Entertainment',
+        amount: 1432.33,
+        Category: 'Housing',
+        CategoryId: 1
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 127.12,
+        Category: 'Food',
         CategoryId: 2
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 12.45,
+        Category: 'Food',
+        CategoryId: 2
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 232.14,
+        Category: 'Utilities',
+        CategoryId: 3
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 32.15,
+        Category: 'Transportation',
+        CategoryId: 4
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 1.00,
+        Category: 'Recreation',
+        CategoryId: 7
+    },
+    {
+        transaction_type: 'Deposit',
+        amount: 5.00
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 10.00,
+        Category: 'Health & Wellness',
+        CategoryId: 5
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 210.00,
+        Category: 'Insurance',
+        CategoryId: 6
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 20.00,
+        Category: 'Miscellaneous',
+        CategoryId: 9
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 20.00,
+        Category: 'Personal Spending',
+        CategoryId: 8
+    },
+    {
+        transaction_type: 'Debt',
+        amount: 64.94,
+        Category: 'Recreation',
+        CategoryId: 7
     }
 ];
 
 const categories = [
     {
-        category_name: 'Gas & Fuel',
-        category_budget: 200.00,
-        category_total: 0.00
+        category_name: 'Housing',
+        category_budget: 1500.00,
+        category_total: 1432.33
     },
     {
-        category_name: 'Video Entertainment',
-        category_budget: 70.00,
+        category_name: 'Food',
+        category_budget: 400.00,
+        category_total: 139.57
+    },
+    {
+        category_name: 'Utilities',
+        category_budget: 350.00,
+        category_total: 232.14
+    },
+    {
+        category_name: 'Transportation',
+        category_budget: 250.00,
+        category_total: 32.15
+    },
+    {
+        category_name: 'Health & Wellness',
+        category_budget: 200.00,
+        category_total: 10.00
+    },
+    {
+        category_name: 'Insurance',
+        category_budget: 500,
+        category_total: 210.00
+    },
+    {
+        category_name: 'Recreation',
+        category_budget: 150.00,
+        category_total: 65.94
+    },
+    {
+        category_name: 'Personal Spending',
+        category_budget: 150.00,
         category_total: 20.00
     },
     {
-        category_name: 'Alcohol & Bars',
-        category_budget: 10.00,
-        category_total: 0.00
-    },
-    {
-        category_name: 'Groceries',
-        category_budget: 500.00,
-        category_total: 0.00
-    },
-    {
-        category_name: 'Restaurants',
-        category_budget: 70.00,
-        category_total: 0.00
-    },
-    {
-        category_name: 'Clothing',
-        category_budget: 30.00,
-        category_total: 0.00
-    },
-    {
-        category_name: 'Fast Food',
-        category_budget: 30.00,
-        category_total: 0.00
-    },
-    {
-        category_name: 'Coffee Shops',
-        category_budget: 20.00,
-        category_total: 0.00
+        category_name: 'Miscellaneous',
+        category_budget: 150.00,
+        category_total: 20.00
     }
 ];
 
