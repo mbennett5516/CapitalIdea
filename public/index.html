@@ -19,7 +19,8 @@
         crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 
@@ -75,6 +76,21 @@
         </table>
     </div>
 
+    <div class="container-fluid hide" id="categoriesPage">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Monthly Budget</th>
+                    <th scope="col">Current Total</th>
+                </tr>
+            </thead>
+            <tbody id="transactionsData">
+
+            </tbody>
+        </table>
+    </div>
+
     <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -114,11 +130,11 @@
                     <form>
                         <div class="form-group">
                             <label for="debtAmount" class="col-form-label">Amount:</label>
-                            <input type="text" class="form-control" id="debtAmount"/>
+                            <input type="text" class="form-control" id="debtAmount" />
                             <label for="categorySelect">Category</label>
                             <select id="categorySelect" class="form-control">
                                 <option selected>Choose...</option>
-                                
+
                             </select>
                         </div>
                     </form>
@@ -144,11 +160,11 @@
                     <form>
                         <div class="form-group">
                             <label for="editAmount" class="col-form-label">Amount:</label>
-                            <input type="text" class="form-control" id="editAmount"/>
+                            <input type="text" class="form-control" id="editAmount" />
                             <label for="editCategory">Category</label>
                             <select id="editCategory" class="form-control">
                                 <option selected>Choose...</option>
-                                
+
                             </select>
                         </div>
                     </form>
@@ -161,6 +177,31 @@
         </div>
     </div>
 
+    <div class="modal fade" id="editdepositModal" tabindex="-1" role="dialog" aria-labelledby="editdepositModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editdepositModalLabel">Edit Deposit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="editdepositAmount" class="col-form-label">Deposit Amount:</label>
+                            <input type="text" class="form-control" id="editdepositAmount">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="editsubmitDeposit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/app.js"></script>
 </body>

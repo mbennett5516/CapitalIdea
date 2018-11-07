@@ -13,6 +13,7 @@ const getHome = function () {
 const hideAll = function () {
     $('#homePage').addClass('hide');
     $('#transactionsPage').addClass('hide');
+    $('#categoriesPage').addClass('hide');
 }
 
 const getAccountBalance = function () {
@@ -122,7 +123,7 @@ const getTransactions = function () {
                 <td class="red">$${response[i].amount.toFixed(2)}</td>
                 <td class="red">${response[i].category}</td>
                 <td class="red">${response[i].createdAt}</td>
-                <td><a href="#" class="editBtn" value="${response[i].id}" id="edit${response[i].id} "data-toggle="modal" data-target="#editModal"><i class="far fa-edit fa-2x"></i></a> <a href="#" class="deleteBtn" value="${response[i].id}" id="delete${response[i].id}"><i class="fas fa-trash-alt fa-2x red"></i></a></td>
+                <td><a href="#" class="editDebtBtn" value="${response[i].id}" id="edit${response[i].id} "data-toggle="modal" data-target="#editModal"><i class="far fa-edit fa-2x"></i></a> <a href="#" class="deleteBtn" value="${response[i].id}" id="delete${response[i].id}"><i class="fas fa-trash-alt fa-2x red"></i></a></td>
             </tr>`;
             }
             else {
@@ -132,12 +133,17 @@ const getTransactions = function () {
                 <td>$${response[i].amount.toFixed(2)}</td>
                 <td></td>
                 <td>${response[i].createdAt}</td>
-                <td><a href="#" class="editBtn" value="${response[i].id}"id="edit${response[i].id}" data-toggle="modal" data-target="#editModal"><i class="far fa-edit fa-2x"></i></a> <a href="#" class="deleteBtn" value="${response[i].id}" id="delete${response[i].id}"><i class="fas fa-trash-alt fa-2x red"></i></a></td>
+                <td><a href="#" class="editBtn" value="${response[i].id}"id="edit${response[i].id}" data-toggle="modal" data-target="#editdepositModal"><i class="far fa-edit fa-2x"></i></a> <a href="#" class="deleteBtn" value="${response[i].id}" id="delete${response[i].id}"><i class="fas fa-trash-alt fa-2x red"></i></a></td>
             </tr>`;
             }
             $('#transactionsData').append(data);
         }
     })
+}
+
+const getCategories = function(){
+    hideAll();
+    $('#categoriesPage').removeClass('hide');
 }
 
 const newDeposit = function (event) {
@@ -146,7 +152,6 @@ const newDeposit = function (event) {
         transaction_type: 'Deposit',
         amount: $('#depositAmount').val()
     };
-    // console.log(body);
     $.ajax({
         url: '/api/transaction',
         method: "POST",
@@ -156,7 +161,6 @@ const newDeposit = function (event) {
             getHome();
         else {
             alert("something went wrong");
-            console.log(response);
         }
     });
 };
@@ -206,13 +210,12 @@ const updateCategory = function (body) {
     }).then(function (response) {
 
         if (response.success === true) {
-            getHome();
+            getTransactions();
         }
     })
 }
 
 const populateCategories = function () {
-    console.log("called");
     $.ajax({
         url: '/api/budgets',
         method: "GET"
@@ -244,7 +247,6 @@ const deleteTrasaction = function () {
             url: `/api/transaction/${response[0].id}`,
             method: "DELETE"
         }).then(function (response) {
-            console.log(response);
         });
         if (response[0].transaction_type === 'Debt') {
             amount = response[0].amount;
@@ -268,28 +270,91 @@ const deleteTrasaction = function () {
         getHome();
     })
 }
-
+let tempvalue = 0;
 const editTransaction = function () {
     populateCategories();
     $.ajax({
         url: `/api/transaction/${$(this).attr('value')}`,
         method: "GET"
     }).then(function(response){
-        $('#editAmount').attr('placeholder', response[0].amount);
+        $('#editAmount').val(response[0].amount);
         $('#editCategory > option').each(function(){
-            if(this.attr('value') == response[0].CategoryId){
-                this.attr('selected');
+            if($(this).val() == response[0].CategoryId){
+                $(this).attr('selected', true);
             }
+            $('#submitEdit').attr('value', response[0].id)
         })
-    })
-    
+        tempvalue = response[0].amount;
+    })   
 }
+
+const submitEditTransaction = function(){
+    let id = $(this).val();
+
+    $.ajax({
+        url: `/api/category/${$('#editCategory').val()}`,
+        method: "GET"
+    }).then(function(response){
+        newTotal = parseFloat(response[0].category_total) - parseFloat(tempvalue) + parseFloat($('#editAmount').val().trim());
+        newCategory = {
+            id : response[0].id,
+            category_name: response[0].category_name,
+            category_budget: response[0].category_budget,
+            category_total: newTotal
+        };
+        let newTransaction = {
+            transaction_type: "Debt",
+            amount: $('#editAmount').val(),
+            category: response[0].category_name,
+            CategoryId: $('#editCategory').val()
+        }
+            $.ajax({
+                url: `/api/transaction/${id}`,
+                method: "PUT",
+                data: newTransaction
+            }).then(function(response){
+
+            });
+        updateCategory(newCategory);
+        
+    })
+}
+
+const editDeposit = function () {
+    $.ajax({
+        url: `/api/transaction/${$(this).attr('value')}`,
+        method: "GET"
+    }).then(function(response){
+        $('#editdepositAmount').val(response[0].amount);
+        $('#editsubmitDeposit').attr('value', response[0].id)
+    })
+}
+
+const submitEditDeposit = function () {
+    let id = $(this).val();
+    let newDeposit = {
+        transaction_type: "Deposit",
+        amount: $('#editdepositAmount').val()
+    };
+    $.ajax({
+        url: `/api/transaction/${id}`,
+        method: "PUT",
+        data: newDeposit
+    }).then(function(response){
+        getTransactions();
+    });
+}
+
 
 $('#home').on('click', getHome);
 $('.navbar-brand').on('click', getHome);
 $('#transactions').on('click', getTransactions);
+$('#categories').on('click', getCategories);
 $('#submitDeposit').on('click', newDeposit);
 $('#submitDebt').on('click', newDebt);
 $('#new_debt').on('click', populateCategories);
 $('#transactionsData').on('click', '.deleteBtn', deleteTrasaction);
-$('#transactionsData').on('click', '.editBtn', editTransaction);
+$('#transactionsData').on('click', '.editDebtBtn', editTransaction);
+$('#transactionsData').on('click', '.editBtn', editDeposit);
+$('#editsubmitDeposit').on('click', submitEditDeposit);
+$('#submitEdit').on('click', submitEditTransaction);
