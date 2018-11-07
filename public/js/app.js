@@ -197,7 +197,7 @@ const newDeposit = function (event) {
         if (response.success === true)
             getTransactions();
         else {
-            alert("something went wrong");
+            alert("Error: " + response.error);
         }
     });
 };
