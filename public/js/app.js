@@ -141,9 +141,48 @@ const getTransactions = function () {
     })
 }
 
-const getCategories = function(){
+const getCategories = function () {
+    console.log("running");
     hideAll();
     $('#categoriesPage').removeClass('hide');
+    $.ajax({
+        url: '/api/budgets',
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+        $('#categoriesData').empty();
+        for (let i = response.length - 1; i >= 0; i--) {
+            let data = '';
+            if (response[i].category_total >= response[i].category_budget) {
+                data += `
+            <tr id = "row${response[i].id}">
+                <td class="red">${response[i].category_name}</td>
+                <td class="red">$${response[i].category_budget.toFixed(2)}</td>
+                <td class="red">$${response[i].category_total.toFixed(2)}</td>
+                <td><a href="#" class="editCategoryBtn" value="${response[i].id}" id="edit${response[i].id} "data-toggle="modal" data-target="#editCategoryModal"><i class="far fa-edit fa-2x"></i></a></td>
+            </tr>`;
+            }
+            else if (response[i].category_total >= (response[i].category_budget / 2)) {
+                data += `
+                <tr id = "row${response[i].id}">
+                    <td class="yellow">${response[i].category_name}</td>
+                    <td class="yellow">$${response[i].category_budget.toFixed(2)}</td>
+                    <td class="yellow">$${response[i].category_total.toFixed(2)}</td>
+                    <td><a href="#" class="editCategoryBtn" value="${response[i].id}" id="edit${response[i].id} "data-toggle="modal" data-target="#editCategoryModal"><i class="far fa-edit fa-2x"></i></a></td>
+                </tr>`;
+            }
+            else {
+                data += `
+                <tr id = "row${response[i].id}">
+                    <td>${response[i].category_name}</td>
+                    <td>$${response[i].category_budget.toFixed(2)}</td>
+                    <td>$${response[i].category_total.toFixed(2)}</td>
+                    <td><a href="#" class="editCategoryBtn" value="${response[i].id}" id="edit${response[i].id} "data-toggle="modal" data-target="#editCategoryModal"><i class="far fa-edit fa-2x"></i></a></td>
+                </tr>`;
+            }
+            $('#categoriesData').append(data);
+        }
+    })
 }
 
 const newDeposit = function (event) {
@@ -209,9 +248,6 @@ const updateCategory = function (body) {
         data: body
     }).then(function (response) {
 
-        if (response.success === true) {
-            getTransactions();
-        }
     })
 }
 
@@ -267,37 +303,39 @@ const deleteTrasaction = function () {
                 updateCategory(categoryBody);
             })
         }
-        getHome();
+        getTransactions();
     })
 }
+
 let tempvalue = 0;
+
 const editTransaction = function () {
     populateCategories();
     $.ajax({
         url: `/api/transaction/${$(this).attr('value')}`,
         method: "GET"
-    }).then(function(response){
+    }).then(function (response) {
         $('#editAmount').val(response[0].amount);
-        $('#editCategory > option').each(function(){
-            if($(this).val() == response[0].CategoryId){
+        $('#editCategory > option').each(function () {
+            if ($(this).val() == response[0].CategoryId) {
                 $(this).attr('selected', true);
             }
             $('#submitEdit').attr('value', response[0].id)
         })
         tempvalue = response[0].amount;
-    })   
+    })
 }
 
-const submitEditTransaction = function(){
+const submitEditTransaction = function () {
     let id = $(this).val();
 
     $.ajax({
         url: `/api/category/${$('#editCategory').val()}`,
         method: "GET"
-    }).then(function(response){
+    }).then(function (response) {
         newTotal = parseFloat(response[0].category_total) - parseFloat(tempvalue) + parseFloat($('#editAmount').val().trim());
         newCategory = {
-            id : response[0].id,
+            id: response[0].id,
             category_name: response[0].category_name,
             category_budget: response[0].category_budget,
             category_total: newTotal
@@ -308,15 +346,15 @@ const submitEditTransaction = function(){
             category: response[0].category_name,
             CategoryId: $('#editCategory').val()
         }
-            $.ajax({
-                url: `/api/transaction/${id}`,
-                method: "PUT",
-                data: newTransaction
-            }).then(function(response){
+        $.ajax({
+            url: `/api/transaction/${id}`,
+            method: "PUT",
+            data: newTransaction
+        }).then(function (response) {
 
-            });
+        });
         updateCategory(newCategory);
-        
+        getTransactions();
     })
 }
 
@@ -324,7 +362,7 @@ const editDeposit = function () {
     $.ajax({
         url: `/api/transaction/${$(this).attr('value')}`,
         method: "GET"
-    }).then(function(response){
+    }).then(function (response) {
         $('#editdepositAmount').val(response[0].amount);
         $('#editsubmitDeposit').attr('value', response[0].id)
     })
@@ -340,11 +378,39 @@ const submitEditDeposit = function () {
         url: `/api/transaction/${id}`,
         method: "PUT",
         data: newDeposit
-    }).then(function(response){
+    }).then(function (response) {
         getTransactions();
     });
 }
 
+const editCategory = function () {
+    $.ajax({
+        url: `/api/category/${$(this).attr('value')}`,
+        method: "GET"
+    }).then(function (response) {
+        $('#editName').val(response[0].category_name);
+        $('#editBudget').val(response[0].category_budget);
+        $('#submitCategoryEdit').attr('value', response[0].id)
+    })
+}
+
+const submitCategoryEdit = function(){
+    let newid = $(this).val();
+    $.ajax({
+        url: `/api/category/${newid}`,
+        method: "GET"
+    }).then(function(response){
+        let newCategory = {
+            id: newid,
+            category_name: $('#editName').val().trim(),
+            category_budget: $('#editBudget').val().trim(),
+            category_total: response[0].category_total,
+        }
+        updateCategory(newCategory);
+        
+    })
+    getCategories();
+}
 
 $('#home').on('click', getHome);
 $('.navbar-brand').on('click', getHome);
@@ -358,3 +424,5 @@ $('#transactionsData').on('click', '.editDebtBtn', editTransaction);
 $('#transactionsData').on('click', '.editBtn', editDeposit);
 $('#editsubmitDeposit').on('click', submitEditDeposit);
 $('#submitEdit').on('click', submitEditTransaction);
+$('#categoriesData').on('click', '.editCategoryBtn', editCategory);
+$('#submitCategoryEdit').on('click', submitCategoryEdit);

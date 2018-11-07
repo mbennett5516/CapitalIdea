@@ -31,6 +31,10 @@ body{
     color: red;
 }
 
+.yellow{
+    color: #ffc107;
+}
+
 .dropdown-menu{
     background-color: #19722e;
 }
