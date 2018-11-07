@@ -197,7 +197,7 @@ const newDeposit = function (event) {
         data: body
     }).then(function (response) {
         if (response.success === true)
-            getHome();
+            getTransactions();
         else {
             alert("something went wrong");
         }
@@ -226,8 +226,9 @@ const newDebt = function (event) {
             category_budget: response[0].category_budget,
             category_total: newTotal
         };
+        updateCategory(categoryBody, 'transactions');
         postDebt(transactionBody);
-        updateCategory(categoryBody);
+        
     });
 };
 
@@ -237,17 +238,23 @@ const postDebt = function (body) {
         method: "POST",
         data: body
     }).then(function (response) {
+        getTransactions();
         return response;
     })
 };
 
-const updateCategory = function (body) {
+const updateCategory = function (body, param) {
     $.ajax({
         url: `/api/category/${body.id}`,
         method: "PUT",
         data: body
     }).then(function (response) {
-
+        if(param === 'categories')
+        getCategories();
+        else if (param === 'transactions')
+        getTransactions();
+        else
+        getHome();
     })
 }
 
@@ -283,6 +290,7 @@ const deleteTrasaction = function () {
             url: `/api/transaction/${response[0].id}`,
             method: "DELETE"
         }).then(function (response) {
+            getTransactions();
         });
         if (response[0].transaction_type === 'Debt') {
             amount = response[0].amount;
@@ -300,10 +308,9 @@ const deleteTrasaction = function () {
                     category_budget: response[0].category_budget,
                     category_total: newTotal
                 }
-                updateCategory(categoryBody);
+                updateCategory(categoryBody, 'transactions');
             })
         }
-        getTransactions();
     })
 }
 
@@ -353,7 +360,7 @@ const submitEditTransaction = function () {
         }).then(function (response) {
 
         });
-        updateCategory(newCategory);
+        updateCategory(newCategory,'transactions');
         getTransactions();
     })
 }
@@ -406,10 +413,10 @@ const submitCategoryEdit = function(){
             category_budget: $('#editBudget').val().trim(),
             category_total: response[0].category_total,
         }
-        updateCategory(newCategory);
+        updateCategory(newCategory, 'categories');
         
     })
-    getCategories();
+
 }
 
 $('#home').on('click', getHome);
