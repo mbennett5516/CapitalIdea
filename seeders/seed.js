@@ -8,37 +8,37 @@ const items = [
     {
         transaction_type: 'Debt',
         amount: 1432.33,
-        Category: 'Housing',
+        category: 'Housing',
         CategoryId: 1
     },
     {
         transaction_type: 'Debt',
         amount: 127.12,
-        Category: 'Food',
+        category: 'Food',
         CategoryId: 2
     },
     {
         transaction_type: 'Debt',
         amount: 12.45,
-        Category: 'Food',
+        category: 'Food',
         CategoryId: 2
     },
     {
         transaction_type: 'Debt',
         amount: 232.14,
-        Category: 'Utilities',
+        category: 'Utilities',
         CategoryId: 3
     },
     {
         transaction_type: 'Debt',
         amount: 32.15,
-        Category: 'Transportation',
+        category: 'Transportation',
         CategoryId: 4
     },
     {
         transaction_type: 'Debt',
         amount: 1.00,
-        Category: 'Recreation',
+        category: 'Recreation',
         CategoryId: 7
     },
     {
@@ -48,31 +48,31 @@ const items = [
     {
         transaction_type: 'Debt',
         amount: 10.00,
-        Category: 'Health & Wellness',
+        category: 'Health & Wellness',
         CategoryId: 5
     },
     {
         transaction_type: 'Debt',
         amount: 210.00,
-        Category: 'Insurance',
+        category: 'Insurance',
         CategoryId: 6
     },
     {
         transaction_type: 'Debt',
         amount: 20.00,
-        Category: 'Miscellaneous',
+        category: 'Miscellaneous',
         CategoryId: 9
     },
     {
         transaction_type: 'Debt',
         amount: 20.00,
-        Category: 'Personal Spending',
+        category: 'Personal Spending',
         CategoryId: 8
     },
     {
         transaction_type: 'Debt',
         amount: 64.94,
-        Category: 'Recreation',
+        category: 'Recreation',
         CategoryId: 7
     }
 ];

@@ -65,6 +65,7 @@ const getBudgetData = function () {
     })
 }
 
+// copied from my stock search app
 const resetCanvas = function () {
     $('#myChart').remove(); // removes the HTML canvas element and all its data
     $('#pie').append('<canvas id="myChart"></canvas>'); // adds a new canvas
